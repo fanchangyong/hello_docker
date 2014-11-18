@@ -1,10 +1,10 @@
 #!/bin/sh
 
-echo "** Cleaning"
-./clean_containers.sh
-
 echo "** Building"
 ./build.sh
+
+echo "** Cleaning"
+sudo docker rm -f redis app
 
 echo "** Running"
 # run redis
