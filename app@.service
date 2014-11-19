@@ -13,3 +13,4 @@ ExecStartPre=-/usr/bin/docker rm app%i
 ExecStartPre=/usr/bin/docker pull fanchangyong/hello_docker
 ExecStart=/usr/bin/docker run --name app%i -p ${COREOS_PUBLIC_IPV4}:%i:3000 \
 	fanchangyong/hello_docker
+ExecStop=/usr/bin/docker stop apache@i
