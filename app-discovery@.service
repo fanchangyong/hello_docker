@@ -1,0 +1,11 @@
+[Unit]
+Description=Announce App@%i service
+BindsTo=app@%i.service
+
+[Service]
+EnvironmentFile=/etc/environment
+ExecStart=/bin/sh -c "while true; do etcdctl set /announce/services/app%i ${COREOS_PUBLIC_IPV4}:%i --ttl 60; sleep 45; done"
+ExecStop=/usr/bin/etcdctl rm /announce/services/app%i
+
+[X-Fleet]
+X-ConditionMachineOf=app@%i.service
