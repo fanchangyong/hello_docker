@@ -1,0 +1,15 @@
+[Unit]
+Description=Docker Introduce App
+After=etcd.service
+After=docker.service
+Requires=app-discovery@%i.service
+
+[Service]
+TimeoutStartSec=0
+KillMode=none
+EnvironmentFile=/etc/environment
+ExecStartPre=-/usr/bin/docker kill app%i
+ExecStartPre=-/usr/bin/docker rm app%i
+ExecStartPre=/usr/bin/docker pull fanchangyong/hello_docker
+ExecStart=/usr/bin/docker run --name app%i -p ${COREOS_PUBLIC_IPV4}:%i:3000 \
+	fanchangyong/hello_docker
